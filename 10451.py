@@ -32,14 +32,11 @@ N개의 정수로 이루어진 순열이 주어졌을 때, 순열 사이클의 �
 7
 '''
 
-def dfs(graph, v, visited, cycle):
+def dfs(graph, v, visited):
     visited[v] = True
     if not visited[graph[v]]:
         visited[graph[v]] = True
-        cycle.append(graph[v])
-        return dfs(graph, graph[v], visited, cycle)
-    else:
-        return 1
+        dfs(graph, graph[v], visited)
 
 T = int(input())
 for _ in range(T):
@@ -49,5 +46,6 @@ for _ in range(T):
     result = 0
     for i in range(1, N + 1):
         if visited[i] == False:
-            result += dfs(graph, i, visited, [])
+            dfs(graph, i, visited)
+            result += 1
     print(result)
