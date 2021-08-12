@@ -22,6 +22,24 @@ D[n] = D[n-1]의 각 자리의 숫자를 P번 곱한 수들의 합
 4
 '''
 
+# def d(A, P):
+#     A_list = map(int, list(str(A)))
+#     result = 0
+#     for i in A_list:
+#         result += i ** P
+#     return result
+
+# A, P = map(int, input().split())
+
+# A_history = [A]
+# while True:
+#     A = d(A, P)
+#     if A in A_history:
+#         print(A_history.index(A))
+#         break
+#     else:
+#         A_history.append(A)
+
 def d(A, P):
     A_list = map(int, list(str(A)))
     result = 0
@@ -31,11 +49,13 @@ def d(A, P):
 
 A, P = map(int, input().split())
 
-A_history = [A]
-while True:
-    A = d(A, P)
-    if A in A_history:
-        print(A_history.index(A))
-        break
+def dfs(A, P, visited, count):
+    visited[A] = count
+    new_A = d(A, P)
+    if new_A not in visited:
+        return dfs(new_A, P, visited, count + 1)
     else:
-        A_history.append(A)
+        return visited[new_A] - 1
+
+visited = {}
+print(dfs(A, P, visited, 1))
